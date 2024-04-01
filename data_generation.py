@@ -8,6 +8,7 @@ client = OpenAI(
 )
 import random
 
+
 def generate_example(prompt, prev_examples, temperature=0.9):
     messages = [
         {

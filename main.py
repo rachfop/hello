@@ -1,15 +1,17 @@
+import pandas as pd
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 from data_generation import generate_example, generate_system_message
 from train import train_model
-import pandas as pd
 
 # User input for creating a new training set
 create_new_training_set = input("Do you want to create a new training set? (y/n): ")
 
-if create_new_training_set.lower() == 'y':
+if create_new_training_set.lower() == "y":
     prompt = input("Enter the prompt for generating the training data: ")
-    temperature = float(input("Enter the temperature for data generation (between 0 and 1): (.7) "))
+    temperature = float(
+        input("Enter the temperature for data generation (between 0 and 1): (.7) ")
+    )
     number_of_examples = int(input("Enter the number of examples to generate: (100) "))
 else:
     # Use the existing training set
@@ -84,6 +86,7 @@ def generate_data(prompt, temperature, number_of_examples):
     test_df.to_json("content/test.jsonl", orient="records", lines=True)
     print(f"{system_message}")
     return system_message
+
 
 system_message = generate_data(prompt, temperature, number_of_examples)
 
