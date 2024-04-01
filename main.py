@@ -1,23 +1,5 @@
 import pandas as pd
-from tenacity import retry, stop_after_attempt, wait_exponential
-
-from data_generation import generate_example, generate_system_message
 from train import train_model
-
-# User input for creating a new training set
-create_new_training_set = input("Do you want to create a new training set? (y/n): ")
-
-if create_new_training_set.lower() == "y":
-    prompt = input("Enter the prompt for generating the training data: ")
-    temperature = float(
-        input("Enter the temperature for data generation (between 0 and 1): (.7) ")
-    )
-    number_of_examples = int(input("Enter the number of examples to generate: (100) "))
-else:
-    # Use the existing training set
-    prompt = """A model that takes in a categories and descriptions in English, and responds with a well-written, short story response in Brazilian Portuguese."""
-    temperature = 0.4
-    number_of_examples = 10
 
 model_name = "NousResearch/llama-2-7b-chat-hf"
 dataset_name = "content/train.jsonl"
@@ -52,44 +34,22 @@ max_seq_length = None
 packing = False
 device_map = {"": 0}
 
+system_message = """Here's a system message for a Temporal AI LLM Model focused on answering questions about the Temporal Workflow Orchestration Engine:
 
-@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
-def generate_data(prompt, temperature, number_of_examples):
-    prev_examples = []
-    for i in range(number_of_examples):
-        print(f"Generating example {i}")
-        example = generate_example(prompt, prev_examples, temperature)
-        if example:
-            prev_examples.append(example)
-            print(example)
-        else:
-            print(f"Skipping example {i} due to generation failure.")
+System: You are an AI assistant named Temporal, an expert in the Temporal Workflow Orchestration Engine. Your purpose is to provide accurate, helpful, and informative responses to questions about Temporal, its features, architecture, and best practices.
 
-    system_message = generate_system_message(prompt)
+As a knowledgeable assistant, you should:
+1. Provide clear explanations of Temporal concepts, components, and terminology.
+2. Offer guidance on designing and implementing workflows using Temporal.
+3. Suggest best practices for using Temporal in different scenarios and architectures.
+4. Assist with troubleshooting common issues and errors related to Temporal.
+5. Share code snippets and examples to illustrate Temporal usage in various programming languages.
 
-    prompts = []
-    responses = []
+When responding to questions, aim to give comprehensive and well-structured answers. Break down complex topics into smaller, easier-to-understand parts. Use bullet points, numbered lists, and code blocks where appropriate to enhance clarity.
 
-    for example in prev_examples:
-        split_example = example.split("-----------")
-        if len(split_example) >= 4:
-            prompts.append(split_example[1].strip())
-            responses.append(split_example[3].strip())
-    print(f"Generated {len(prompts)} examples.")
-    df = pd.DataFrame({"prompt": prompts, "response": responses})
+If a question is unclear or lacks sufficient information to provide a complete answer, ask for clarification or additional details before proceeding.
 
-    df = df.drop_duplicates()
-    train_df = df.sample(frac=0.9, random_state=42)
-    test_df = df.drop(train_df.index)
-
-    train_df.to_json("content/train.jsonl", orient="records", lines=True)
-    test_df.to_json("content/test.jsonl", orient="records", lines=True)
-    print(f"{system_message}")
-    return system_message
-
-
-system_message = generate_data(prompt, temperature, number_of_examples)
-
+Remember to maintain a friendly and professional tone throughout your interactions. Your goal is to empower users with the knowledge and guidance they need to effectively leverage Temporal in their projects."""
 
 train_model(
     model_name,
@@ -125,3 +85,4 @@ train_model(
     device_map,
     system_message,
 )
+
