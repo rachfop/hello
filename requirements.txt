@@ -1,0 +1,17 @@
+accelerate==0.21.0
+bitsandbytes==0.40.2
+datasets
+openai
+pandas
+peft==0.4.0
+torch
+transformers==4.39.2
+trl==0.4.7
+scipy==1.12.0
+setuptools==69.2.0
+<<<<<<< HEAD
+datasets
+=======
+datasets
+tenacity==8.2.3
+>>>>>>> 767dc7f (Add)
