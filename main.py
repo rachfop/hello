@@ -1,5 +1,8 @@
 import pandas as pd
 from train import train_model
+import os
+
+auth_token = os.getenv('HF_AUTH_TOKEN')
 
 model_name = "mistral/Mistral-7B-Instruct-v0.2"
 dataset_name = "content/train.jsonl"
@@ -76,7 +79,6 @@ train_model(
     learning_rate,
     weight_decay,
     optim,
-    use_auth_token,
     lr_scheduler_type,
     max_steps,
     warmup_ratio,
@@ -87,5 +89,6 @@ train_model(
     packing,
     device_map,
     system_message,
+    use_auth_token=auth_token
 )
 
