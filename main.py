@@ -2,9 +2,8 @@ import pandas as pd
 from train import train_model
 import os
 
-auth_token = os.getenv('HF_AUTH_TOKEN')
 
-model_name = "mistral/Mistral-7B-Instruct-v0.2"
+model_name = "openchat/openchat-3.5-1210"
 dataset_name = "content/train.jsonl"
 new_model = "llama-2-7b-custom"
 
@@ -88,6 +87,5 @@ train_model(
     packing,
     device_map,
     system_message,
-    token=auth_token,
 )
 
