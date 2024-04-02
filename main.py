@@ -86,6 +86,6 @@ train_model(
     max_seq_length,
     packing,
     device_map,
-    system_message,
+    system_message=system_message,
 )
 
