@@ -1,7 +1,7 @@
 import pandas as pd
 from train import train_model
 
-model_name = "mistralai/Mistral-7B-Instruct-v0.2
+model_name = "mistralai/Mistral-7B-Instruct-v0.2"
 dataset_name = "content/train.jsonl"
 new_model = "llama-2-7b-custom"
 
