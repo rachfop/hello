@@ -35,7 +35,6 @@ save_steps = 25
 logging_steps = 5
 max_seq_length = None
 packing = False
-use_auth_token=True
 use_reentrant = True
 device_map = {"": 0}
 
@@ -89,6 +88,6 @@ train_model(
     packing,
     device_map,
     system_message,
-    use_auth_token=auth_token
+    token=auth_token,
 )
 
