@@ -14,6 +14,7 @@ def train_model(
     dataset_name,
     new_model,
     lora_r,
+    use_auth_token,
     lora_alpha,
     lora_dropout,
     use_4bit,

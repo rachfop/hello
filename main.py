@@ -1,7 +1,7 @@
 import pandas as pd
 from train import train_model
 
-model_name = "mistralai/Mistral-7B-Instruct-v0.2"
+model_name = "mistral/Mistral-7B-Instruct-v0.2"
 dataset_name = "content/train.jsonl"
 new_model = "llama-2-7b-custom"
 
@@ -32,6 +32,7 @@ save_steps = 25
 logging_steps = 5
 max_seq_length = None
 packing = False
+use_auth_token=True
 use_reentrant = True
 device_map = {"": 0}
 
@@ -75,6 +76,7 @@ train_model(
     learning_rate,
     weight_decay,
     optim,
+    use_auth_token,
     lr_scheduler_type,
     max_steps,
     warmup_ratio,
