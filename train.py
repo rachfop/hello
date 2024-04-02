@@ -9,7 +9,6 @@ from transformers import (AutoModelForCausalLM, AutoTokenizer,
                           pipeline)
 from trl import SFTTrainer
 
-
 def train_model(
     model_name,
     dataset_name,

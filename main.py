@@ -1,7 +1,7 @@
 import pandas as pd
 from train import train_model
 
-model_name = "NousResearch/llama-2-7b-chat-hf"
+model_name = "mistralai/Mistral-7B-Instruct-v0.2
 dataset_name = "content/train.jsonl"
 new_model = "llama-2-7b-custom"
 
@@ -32,6 +32,7 @@ save_steps = 25
 logging_steps = 5
 max_seq_length = None
 packing = False
+use_reentrant = True
 device_map = {"": 0}
 
 system_message = """Here's a system message for a Temporal AI LLM Model focused on answering questions about the Temporal Workflow Orchestration Engine:
